@@ -666,10 +666,10 @@ body[data-current="winners"] section[data-screen="winners"] { display: block; }
   </div>
 
   <div class="card">
-    <h3>The Field (20 horses)</h3>
+    <h3>The Field (19 horses)</h3>
     <details>
       <summary>Edit horse names</summary>
-      <p class="note">Tap a name to edit. Paste the official 2026 field if you have it.</p>
+      <p class="note">Pre-loaded with the 2026 Derby field as run on May 2 (The Puma scratched morning of). Tap a name to correct anything.</p>
       <div id="horses-list"></div>
     </details>
   </div>
@@ -756,7 +756,7 @@ body[data-current="winners"] section[data-screen="winners"] { display: block; }
   <div id="winners-content"></div>
   <div class="scoring-rules">
     <h3>Scoring Rules</h3>
-    <p><strong>Random Draw:</strong> Every horse is dealt round-robin to players. Owner of the 1st-place horse takes the entire random-draw pot.</p>
+    <p><strong>Random Draw:</strong> All 19 horses are dealt round-robin to players. Owner of the 1st-place horse takes the entire random-draw pot.</p>
     <p><strong>Strategic Picks:</strong> Each player picks a WIN horse + 2 SHOW horses. <strong>5 pts</strong> if your WIN pick finishes 1st. <strong>+2 pts</strong> for every one of your 3 picks that finishes top 3 (max 6 pts).</p>
     <p><strong>Ties:</strong> Pot splits evenly among tied winners.</p>
     <p><strong>No strategic winner</strong> (every score zero): pot rolls into the random-draw pot.</p>
@@ -775,7 +775,28 @@ body[data-current="winners"] section[data-screen="winners"] { display: block; }
 (() => {
   'use strict';
 
-  const HORSE_COUNT = 20;
+  const DERBY_FIELD_2026 = [
+    'Renegade',        // Post 1
+    'Albus',           // Post 2
+    'Intrepido',       // Post 3
+    'Litmus Test',     // Post 4
+    'Robusta',         // Post 5
+    'Commandment',     // Post 6
+    'Danon Bourbon',   // Post 7
+    'So Happy',        // Post 8
+    'Wonder Dean',     // Post 9
+    'Incredibolt',     // Post 10
+    'Chief Wallabee',  // Post 11
+    'Potente',         // Post 12
+    'Emerging Market', // Post 13
+    'Pavlovian',       // Post 14
+    'Six Speed',       // Post 15
+    'Further Ado',     // Post 16
+    'Golden Tempo',    // Post 17
+    'Great White',     // Post 18
+    'Ocelli',          // Post 19
+  ];
+  const HORSE_COUNT = DERBY_FIELD_2026.length;
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
   const fmtMoney = (n) => {
@@ -787,7 +808,7 @@ body[data-current="winners"] section[data-screen="winners"] { display: block; }
     screen: 'setup',
     players: [],
     buyIn: 10,
-    horses: Array.from({length: HORSE_COUNT}, (_, i) => `Horse ${i + 1}`),
+    horses: DERBY_FIELD_2026.slice(),
     assignments: {},
     picks: {},
     pickerIndex: 0,
@@ -830,7 +851,7 @@ body[data-current="winners"] section[data-screen="winners"] { display: block; }
       input.maxLength = 40;
       input.addEventListener('input', e => {
         const v = e.target.value.trim();
-        state.horses[i] = v || `Horse ${i + 1}`;
+        state.horses[i] = v || DERBY_FIELD_2026[i];
       });
       row.appendChild(post);
       row.appendChild(input);
